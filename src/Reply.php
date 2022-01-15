@@ -23,8 +23,6 @@ class Reply
         if (count($this->tweetTexts) > 1) {
             $this->sendReplies($initialTweet);
         }
-
-        $foo = 21;
     }
 
     private function tweetInitialTweet($triggerTweetId)

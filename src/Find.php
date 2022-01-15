@@ -17,21 +17,51 @@ class Find
 
     public function findTweets()
     {
+        $user = $this->twitter->user('bostonplatebot');
+
         $params = [
-            'query' => '@bostonplatebot',
-            'max_results'  => 10,
+            'tweet.fields' => 'attachments,author_id,created_at,conversation_id',
         ];
 
-        $tweets = $this->twitter->tweets();
-        $found = $tweets->search()->recent($params);
+        $mentions = $user->mentions($params);
+        $tweetsPossiblyNeedingAttention = [];
+        foreach ($mentions->data as $mention) {
+            if ((time() - strtotime($mention->created_at)) < 1800) {
+                $tweetsPossiblyNeedingAttention[] = $mention;
+            }
+        }
 
-        foreach ($found->data as $mention) {
-            $parts = explode(' ', $mention->text);
-            $plateNumber = end($parts);
+        // Find tweets by bostonplatebot with the platenumber in it. If it exists and it's newer than the original tweet, we're all set.
+        foreach ($tweetsPossiblyNeedingAttention as $tweetPossiblyNeedingAttention) {
+            $possiblePreviousResponses = $this->findRecentTweetsByUserContainingString('bostonplatebot', $this->getPlateNumberFromTweet($tweetPossiblyNeedingAttention));
+            if (!property_exists($possiblePreviousResponses,'data')) {
+                $needResponses[] = $tweetPossiblyNeedingAttention;
+            }
+        }
+
+        foreach ($needResponses as $needsResponse) {
+            $plateNumber = $this->getPlateNumberFromTweet($needsResponse);
             $fetcher = new Fetcher($plateNumber);
             $plateInfo = $fetcher->getPlateInfo();
-            $reply = new Reply($mention, $plateInfo->message);
+            $reply = new Reply($needsResponse, $plateInfo->message);
         }
+    }
+
+    private function findRecentTweetsByUserContainingString($username, $string)
+    {
+        $tweets = $this->twitter->tweets();
+        $params = [
+            'query' => 'from:'. $username . ' ' . $string,
+        ];
+        return $tweets->search()->recent($params);
+    }
+
+    private function getPlateNumberFromTweet(\stdClass $tweet)
+    {
+        $text = $tweet->text;
+        $parts = explode(' ', $text);
+        $plateNumber = end($parts);
+        return $plateNumber;
     }
 
 }
