@@ -27,11 +27,13 @@ class Find
         $tweetsPossiblyNeedingAttention = [];
         foreach ($mentions->data as $mention) {
             if ((time() - strtotime($mention->created_at)) < 1800) {
-                $tweetsPossiblyNeedingAttention[] = $mention;
+                if ($this->validateTweetFormat($mention->text)) {
+                    $tweetsPossiblyNeedingAttention[] = $mention;
+                }
             }
         }
 
-        // Find tweets by bostonplatebot with the platenumber in it. If it exists and it's newer than the original tweet, we're all set.
+        $needResponses = [];
         foreach ($tweetsPossiblyNeedingAttention as $tweetPossiblyNeedingAttention) {
             $possiblePreviousResponses = $this->findRecentTweetsByUserContainingString('bostonplatebot', $this->getPlateNumberFromTweet($tweetPossiblyNeedingAttention));
             if (!property_exists($possiblePreviousResponses,'data')) {
@@ -62,6 +64,17 @@ class Find
         $parts = explode(' ', $text);
         $plateNumber = end($parts);
         return $plateNumber;
+    }
+
+    private function validateTweetFormat($tweetText)
+    {
+        if (!str_starts_with($tweetText, '@bostonplatebot')) {
+            return false;
+        }
+        if (count(explode(' ', $tweetText)) !== 2) {
+            return false;
+        }
+        return true;
     }
 
 }
