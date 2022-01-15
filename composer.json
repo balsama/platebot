@@ -1,0 +1,25 @@
+{
+    "name": "balsama/bostonplatebot",
+    "description": "Lookup boston parking tickets by plate number",
+    "type": "project",
+    "require": {
+        "php": "^8.0",
+        "noweh/twitter-api-v2-php": "dev-master",
+        "coderjerk/bird-elephant": "^0.4.2",
+        "guzzlehttp/guzzle": "^7.4"
+    },
+    "license": "gpl-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Balsama\\Bostonplatebot\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Adam Balsam",
+            "email": "balsam.adam@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
