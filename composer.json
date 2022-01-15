@@ -4,7 +4,6 @@
     "type": "project",
     "require": {
         "php": "^8.0",
-        "noweh/twitter-api-v2-php": "dev-master",
         "coderjerk/bird-elephant": "^0.4.2",
         "guzzlehttp/guzzle": "^7.4"
     },

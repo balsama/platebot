@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3ddff1012b04f41a08302dc3583c46b",
+    "content-hash": "adbbfc17fd9f1bfcc197ca45c7977cca",
     "packages": [
         {
             "name": "coderjerk/bird-elephant",
@@ -442,61 +442,6 @@
             "time": "2021-10-06T17:43:30+00:00"
         },
         {
-            "name": "noweh/twitter-api-v2-php",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/noweh/twitter-api-v2-php.git",
-                "reference": "1c86d3478214feff90450598c1f72912d738db8f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/noweh/twitter-api-v2-php/zipball/1c86d3478214feff90450598c1f72912d738db8f",
-                "reference": "1c86d3478214feff90450598c1f72912d738db8f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^7.4",
-                "guzzlehttp/oauth-subscriber": "^0.6",
-                "php": ">=8.1"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^1.2.0",
-                "phpunit/phpunit": "^9.5",
-                "vlucas/phpdotenv": "^5.3"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Noweh\\TwitterApi\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Julien Schmitt",
-                    "email": "jschmitt95@protonmail.com"
-                }
-            ],
-            "description": "This library provide methods for sending messages to Twitter and receiving statuses.",
-            "keywords": [
-                "api",
-                "php",
-                "twitter"
-            ],
-            "support": {
-                "issues": "https://github.com/noweh/twitter-api-v2-php/issues",
-                "source": "https://github.com/noweh/twitter-api-v2-php/tree/master"
-            },
-            "time": "2021-12-29T12:45:52+00:00"
-        },
-        {
             "name": "psr/http-client",
             "version": "1.0.1",
             "source": {
@@ -771,9 +716,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "noweh/twitter-api-v2-php": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
