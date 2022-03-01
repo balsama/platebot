@@ -13,7 +13,7 @@ class Reply
     private string $fullTweetText;
     private array $tweetTexts;
 
-    public function __construct(\stdClass $triggerTweet, string $fullTweetText)
+    public function __construct(BiElTweet $triggerTweet, string $fullTweetText)
     {
         $this->twitter = Initialize::initialize();
         $this->fullTweetText = $fullTweetText;
