@@ -8,9 +8,11 @@ class Find
 {
 
     private BirdElephant $twitter;
+    private string $env;
 
-    public function __construct()
+    public function __construct($env = 'lan')
     {
+        $this->env = $env;
         $this->twitter = Initialize::initialize();
         $this->findTweets();
     }
@@ -50,7 +52,7 @@ class Find
 
         foreach ($needResponses as $needsResponse) {
             $plateNumber = $this->getPlateNumberFromTweet($needsResponse);
-            $fetcher = new Fetcher($plateNumber);
+            $fetcher = new Fetcher($plateNumber, $this->env);
             $plateInfo = $fetcher->getPlateInfo();
             $reply = new Reply($needsResponse, $plateInfo->message);
         }
