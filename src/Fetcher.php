@@ -21,7 +21,7 @@ class Fetcher
 
     public function getPlateInfo()
     {
-        $url = 'http://159.65.237.74/lookup.php';
+        $url = 'http://192.168.7.126/lookup.php';
         $request = $this->client->request('POST', $url, [
             'form_params' => [
                 'plate_number'  => $this->plateNumber,

@@ -23,12 +23,19 @@ class Find
             'tweet.fields' => 'attachments,author_id,created_at,conversation_id',
         ];
 
+        // @todo Make $mentions into a Class
         $mentions = $user->mentions($params);
         $tweetsPossiblyNeedingAttention = [];
         foreach ($mentions->data as $mention) {
-            if ((time() - strtotime($mention->created_at)) < 1800) {
+            if ((time() - strtotime($mention->created_at)) < 86400) {
                 if ($this->validateTweetFormat($mention->text)) {
-                    $tweetsPossiblyNeedingAttention[] = $mention;
+                    $tweetsPossiblyNeedingAttention[] = new BiElTweet(
+                        $mention->author_id,
+                        $mention->conversation_id,
+                        new \DateTime($mention->created_at),
+                        $mention->id,
+                        $mention->text,
+                    );
                 }
             }
         }
@@ -58,7 +65,7 @@ class Find
         return $tweets->search()->recent($params);
     }
 
-    private function getPlateNumberFromTweet(\stdClass $tweet)
+    private function getPlateNumberFromTweet(BiElTweet $tweet)
     {
         $text = $tweet->text;
         $parts = explode(' ', $text);
