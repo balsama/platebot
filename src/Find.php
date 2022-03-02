@@ -54,7 +54,7 @@ class Find
             $plateNumber = $this->getPlateNumberFromTweet($needsResponse);
             $fetcher = new Fetcher($plateNumber, $this->env);
             $plateInfo = $fetcher->getPlateInfo();
-            $reply = new Reply($needsResponse, $plateInfo->message);
+            $reply = new Reply($needsResponse, $plateInfo);
         }
     }
 
