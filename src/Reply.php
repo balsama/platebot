@@ -5,6 +5,7 @@ namespace Balsama\Bostonplatebot;
 use Coderjerk\BirdElephant\BirdElephant;
 use Coderjerk\BirdElephant\Compose\Tweet;
 use Coderjerk\BirdElephant\Compose\Reply as TweetReply;
+use Coderjerk\BirdElephant\User;
 
 class Reply
 {
@@ -18,6 +19,10 @@ class Reply
         $this->triggerTweetId = $triggerTweet->id;
 
         $this->chunkTweets($plateInfo);
+
+        if ($plateInfo->tickets) {
+            $this->retweetOriginal();
+        }
     }
 
     private function chunkTweets(\stdClass $plateInfo): void
@@ -104,6 +109,11 @@ class Reply
         $tweet->text($replyText);
         $tweet->reply($reply);
         return $this->twitter->tweets()->tweet($tweet);
+    }
+
+    private function retweetOriginal()
+    {
+        $this->twitter->user('bostonplatebot')->retweet($this->triggerTweetId);
     }
 
 }
