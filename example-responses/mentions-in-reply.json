@@ -1,0 +1,20 @@
+{
+    "data": [
+        {
+            "created_at": "2022-10-03T21:07:06.000Z",
+            "conversation_id": "1577042504423469056",
+            "id": "1577042585004015616",
+            "author_id": "1276722810732363776",
+            "text": "@bostonplatebot 1234abc",
+            "edit_history_tweet_ids": [
+                "1577042585004015616"
+            ]
+        }
+    ],
+    "meta": {
+        "result_count": 10,
+        "newest_id": "1577042585004015616",
+        "oldest_id": "1574445381311557644",
+        "next_token": "7140dibdnow9c7btw423hv9qumlqqixt8igd0swupo8xg"
+    }
+}

@@ -14,7 +14,6 @@ class Find
     {
         $this->env = $env;
         $this->twitter = Initialize::initialize();
-        $this->findTweets();
     }
 
     public function findTweets()
@@ -27,9 +26,11 @@ class Find
 
         // @todo Make $mentions into a Class
         $mentions = $user->mentions($params);
+        $mentions = json_decode(file_get_contents(__DIR__ . '/../example-responses/mentions-in-reply.json'));
+
         $tweetsPossiblyNeedingAttention = [];
         foreach ($mentions->data as $mention) {
-            if ((time() - strtotime($mention->created_at)) < 86400) {
+            if ((time() - strtotime($mention->created_at)) < 8640000) {
                 if ($this->validateTweetFormat($mention->text)) {
                     $tweetsPossiblyNeedingAttention[] = new BiElTweet(
                         $mention->author_id,
@@ -50,12 +51,22 @@ class Find
             }
         }
 
+        $this->precessTweetsThatNeedResponses($needResponses);
+    }
+
+    public function precessTweetsThatNeedResponses($needResponses) {
         foreach ($needResponses as $needsResponse) {
-            $plateNumber = $this->getPlateNumberFromTweet($needsResponse);
-            $fetcher = new Fetcher($plateNumber, $this->env);
-            $plateInfo = $fetcher->getPlateInfo();
-            $reply = new Reply($needsResponse, $plateInfo);
+            /* @var \Balsama\Bostonplatebot\BiElTweet $needsResponse */
+            $this->processTweetThatNeedsRespons($needsResponse);
         }
+    }
+
+    public function processTweetThatNeedsRespons(BiElTweet $tweetToRespondTo)
+    {
+        $plateNumber = $this->getPlateNumberFromTweet($tweetToRespondTo);
+        $fetcher = new Fetcher($plateNumber, $this->env);
+        $plateInfo = $fetcher->getPlateInfo();
+        return $reply = new Reply($tweetToRespondTo, $plateInfo);
     }
 
     private function findRecentTweetsByUserContainingString($username, $string)
